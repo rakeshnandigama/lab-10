@@ -1,0 +1,38 @@
+Name : Rakesh Nandigama
+cwid : 20054070
+date 4/24/2014
+
+/**********************************/
+
+CREATE OR REPLACE FUNCTION PreReqsFor (tot integer)
+RETURNS integer AS $test$
+declare
+	test integer=0;
+	
+BEGIN
+   SELECT preReqNum into test FROM Prerequisites where courseNum=tot;
+   RETURN test;
+END;
+$test$ LANGUAGE plpgsql;
+
+query for test
+----------------------
+select PreReqsFor(499)
+
+
+/**********************************/
+
+CREATE OR REPLACE FUNCTION IsPreReqFor(tot integer)
+RETURNS Char(50) AS $test$
+declare
+        test Char(50);
+BEGIN
+SELECT name from Courses where num in (select preReqNum into test FROM Prerequisites where courseNum=tot);
+   RETURN test;
+END;
+$test$ LANGUAGE plpgsql;
+
+
+query for test
+----------------------
+select IsPreReqFor(499)
